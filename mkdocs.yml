@@ -1,13 +1,63 @@
-site_name: Documentação Catálogo
-site_description: Documentação do projeto Catálogo de Produtos
+site_name: Catalog SaaS Documentation
+site_description: Documentação do projeto Catálogo de Produtos multi-tenant
 site_author: Leandro Santos
+repo_url: https://github.com/leandrcorreasantos/catalog-docs
+edit_url: https://github.com/leandrcorreasantos/catalog-docs/edit/main/docs/
 
 theme:
   name: material
-
-nav:
-  - Home: index.md
-  - About: about.md
+  languquage: pt-br
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotations
+    - content.code.copy
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Modo Escuro
+      primary: indigo
+      accent: indigo
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Modo Claro
+      primary: indigo
+      accent: indigo
 
 plugins:
   - search
+  - plantuml-markdown
+  - plantuml:
+    puml_url: https://www.plantuml.com/plantuml/
+    num_workers: 4
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - admonition
+  - footnotes
+  - toc:
+      permalink: true
+
+nav:
+  - Início: index.md
+  - Arquitetura:
+    - Visão Geral: architecture/overview.md
+    - Modelo de Domínio: architecture/domain-model.md
+    - Diagramas: architecture/diagrams.md
+  - Guias:
+    - Onboarding: guides/developer-onboarding.md
+    - Setup de Tenant: guides/tenant-setup.md
+    - API: guides/api.md
+  - Decisões: decisions/

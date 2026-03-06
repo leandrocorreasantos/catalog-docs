@@ -6,30 +6,50 @@ on:
     branches: [main]
     paths:
       - 'docs/**'
-      - 'architecture/**'
-      - 'guides/**'
       - 'mkdocs.yml'
+  workflow_dispatch:
 
-jobs:
+permissions:
+  contents: write
+
+jjobs:
   deploy:
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v3
-      
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
-      
-      - name: Install MkDocs
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
         run: |
+          pip install --upgrade pip
           pip install mkdocs mkdocs-material plantuml-markdown
-      
-      - name: Build docs
-        run: mkdocs build
-      
+
+      - name: Verify docs directory
+        run: |
+          echo "📁 Estrutura do repositório:"
+          ls -la
+          echo ""
+          echo "📁 Conteúdo do diretório docs (se existir):"
+          ls -la docs/ || echo "Diretório docs/ não encontrado"
+
+      - name: Build MkDocs
+        run: |
+          mkdocs build --verbose
+        working-directory: ./
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site
+          publish_branch: gh-pages
+          force_orphan: true
