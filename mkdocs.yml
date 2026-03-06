@@ -1,0 +1,13 @@
+site_name: Documentação Catálogo
+site_description: Documentação do projeto Catálogo de Produtos
+site_author: Leandro Santos
+
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - About: about.md
+
+plugins:
+  - search
