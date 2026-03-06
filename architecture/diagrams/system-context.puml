@@ -1,0 +1,33 @@
+@startuml
+!include <C4/C4_Container>
+!include <C4/C4_Context>
+
+Person(admin, "Admin", "System administrator")
+Person(support, "Support", "Customer support team")
+Person(client, "Client", "End user of the system")
+Person(user, "User", "General user of the system")
+
+System(backend, "Backend System", "Handles business logic and data processing")
+System(frontend, "Frontend System", "HTMX application for user interactions")
+System(app, "Client Panel", "Next.js application for clients to manage their accounts and services")
+System(adminPanel, "Admin Panel", "Next.js application for administrators to manage the system")
+
+System_Ext(loki, "Loki", "Logging system")
+System_Ext(promtail, "Promtail", "Log shipping system")
+System_Ext(prometheus, "Prometheus", "Monitoring system")
+System_Ext(grafana, "Grafana", "Visualization and monitoring system")
+
+Rel(admin, adminPanel, "Manages the system")
+Rel(support, adminPanel, "Assists in managing the system")
+Rel(client, app, "Manages their account and services")
+Rel(user, frontend, "Interacts with the system")
+
+Rel(frontend, backend, "Sends requests to")
+Rel(app, backend, "Sends requests to")
+Rel(adminPanel, backend, "Sends requests to")
+Rel(backend, loki, "Sends logs to")
+Rel(promtail, loki, "Ships logs to")
+Rel(backend, prometheus, "Exposes metrics to")
+Rel(prometheus, grafana, "Sends metrics to")
+
+@enduml
